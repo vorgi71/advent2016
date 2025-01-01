@@ -47,7 +47,7 @@ fn main() {
   println!("result2:{}", result2);
 }
 
-fn process_instructions(lines: &Vec<String>) -> String {
+fn process_instructions(lines: &Vec<String>) -> i32 {
   let mut bot_map: HashMap<String, Bot> = HashMap::new();
   for line in lines {
     if line.starts_with("value") {
@@ -88,13 +88,14 @@ fn process_instructions(lines: &Vec<String>) -> String {
     }
   }
 
-  process_bot_map(bot_map);
-
-  "?".to_string()
+  process_bot_map(bot_map)
 }
 
-fn process_bot_map(mut bot_map: HashMap<String, Bot>) {
+fn process_bot_map(mut bot_map: HashMap<String, Bot>) -> i32 {
   let mut changed = true;
+
+  let mut outputs:HashMap<String,i32>= HashMap::new();
+
   while changed {
     changed = false;
 
@@ -118,11 +119,21 @@ fn process_bot_map(mut bot_map: HashMap<String, Bot>) {
             changed = true;
             println!("bot {} gets low chip {}", low_bot_name, low_chip);
 
+          } else {
+            if low_bot_name.starts_with("output") {
+              println!("output {low_bot_name} gets {low_chip}");
+              outputs.insert(low_bot_name, low_chip);
+            }
           }
           if let Some(high_bot) = bot_map.get_mut(&high_bot_name) {
             high_bot.chips.push(high_chip);
             changed = true;
             println!("bot {} gets high chip {}", high_bot_name, high_chip);
+          } else {
+            if high_bot_name.starts_with("output") {
+              println!("output {high_bot_name} gets {high_chip}");
+              outputs.insert(high_bot_name, high_chip);
+            }
           }
         }
       }
@@ -137,4 +148,17 @@ fn process_bot_map(mut bot_map: HashMap<String, Bot>) {
       println!("found {:?}", bot);
     }
   }
+  println!("outputs: {:?}",outputs);
+
+  println!("outputs: {:?} {:?} {:?}",
+           outputs.get("output 0"),
+           outputs.get("output 1"),
+           outputs.get("output 2"));
+
+
+  let mul = outputs.get("output 0").unwrap() *
+      outputs.get("output 1").unwrap() *
+      outputs.get("output 2").unwrap();
+
+  mul
 }
