@@ -1,54 +1,6 @@
-pub enum Direction {
-  North,
-  East,
-  South,
-  West,
-}
-
-#[derive(Eq, PartialEq, Copy, Clone)]
-pub struct Pos {
-  x: i32,
-  y: i32,
-}
-
-impl Direction {
-  fn turn_left(&self) -> Direction {
-    match self {
-      Direction::North => Direction::West,
-      Direction::West => Direction::South,
-      Direction::South => Direction::East,
-      Direction::East => Direction::North,
-    }
-  }
-  fn turn_right(&self) -> Direction {
-    match self {
-      Direction::North => Direction::East,
-      Direction::East => Direction::South,
-      Direction::South => Direction::West,
-      Direction::West => Direction::North,
-    }
-  }
-
-  fn plus(&self, pos: &Pos) -> Pos {
-    match self {
-      Direction::North => { Pos {x: pos.x , y: pos.y-1} }
-      Direction::East => { Pos {x: pos.x+1, y: pos.y} }
-      Direction::South => { Pos {x: pos.x , y: pos.y+1} }
-      Direction::West => { Pos {x: pos.x-1, y: pos.y} }
-    }
-  }
-}
-
-impl Pos {
-  fn plus(&self, dir:&Direction) -> Pos {
-    match dir {
-      Direction::North => { Pos {x: self.x , y: self.y-1} }
-      Direction::East => { Pos {x: self.x+1, y: self.y} }
-      Direction::South => { Pos {x: self.x , y: self.y+1} }
-      Direction::West => { Pos {x: self.x-1, y: self.y} }
-    }
-  }
-}
+mod utils;
+use utils::utils::Pos;
+use utils::utils::Direction;
 
 pub fn read_file(file: &str) -> String {
   std::fs::read_to_string(file).unwrap()
