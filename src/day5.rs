@@ -1,3 +1,4 @@
+use std::time::Instant;
 use md5::{Digest, Md5};
 use std::usize;
 
@@ -59,5 +60,9 @@ fn part2() {
 }
 
 fn main() {
+  let now = Instant::now();
   part2();
+  let elapsed = now.elapsed();
+
+  println!("Elapsed: {:.2?}", elapsed);
 }
