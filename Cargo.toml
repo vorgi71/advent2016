@@ -83,6 +83,11 @@ path = "src/day19.rs"
 name = "day20"
 path = "src/day20.rs"
 
+[[bin]]
+name = "day21"
+path = "src/day21.rs"
+
+
 [dependencies]
 md-5 = "0.10"
 regex = "1.11.1" # Or latest version
