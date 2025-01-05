@@ -47,6 +47,7 @@ pub mod utils {
     }
   }
 
+  #[derive(Debug)]
   pub enum Direction {
     North,
     East,
